@@ -25,7 +25,7 @@ export function BookingPage({ onNav }: { onNav: (p: string) => void }): JSX.Elem
 
             <div style={{ marginBottom: 20 }}>
                 <div style={{ fontWeight: 700, color: colors.navy, fontFamily: "'Nunito',sans-serif", marginBottom: 10, fontSize: 14 }}>Select Baby</div>
-                <div style={{ display: "flex", gap: 10 }}>
+                <div className="baby-selector">
                     {mockBabies.map((b, i) => (
                         <button key={b.id} onClick={() => setSelectedBaby(i)} style={{
                             flex: 1, padding: 14, borderRadius: 14, border: "2px solid",
@@ -50,7 +50,7 @@ export function BookingPage({ onNav }: { onNav: (p: string) => void }): JSX.Elem
 
             <div style={{ marginBottom: 24 }}>
                 <div style={{ fontWeight: 700, color: colors.navy, fontFamily: "'Nunito',sans-serif", marginBottom: 10, fontSize: 14 }}>Available Time Slots</div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
+                <div className="time-slots">
                     {mockSlots.map(slot => {
                         const isBooked = bookedSlots.includes(slot), isSel = selectedSlot === slot;
                         return (

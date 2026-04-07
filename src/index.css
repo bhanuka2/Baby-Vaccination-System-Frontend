@@ -106,17 +106,34 @@ body {
   }
 
   .nav-item {
-    width: 100%;
+    width: auto !important;
     flex-direction: row !important;
     justify-content: flex-start !important;
-    padding: 16px 24px !important;
-    border-top: none !important;
-    border-left: 4px solid transparent;
+    padding: 14px 20px !important;
+    margin: 4px 16px !important;
+    border: none !important;
+    border-radius: 14px !important;
+    gap: 16px !important;
+    align-self: stretch;
+    transition: all 0.2s ease !important;
+  }
+
+  .nav-item:hover {
+    background: rgba(45, 53, 97, 0.04);
+  }
+
+  .nav-item .nav-text {
+    font-size: 15px !important;
+    font-weight: 700 !important;
   }
 
   .nav-item.active {
-    border-left-color: var(--mint) !important;
-    background: rgba(78, 205, 196, 0.05);
+    background: var(--mint) !important;
+    box-shadow: 0 4px 14px rgba(78, 205, 196, 0.3);
+  }
+
+  .nav-item.active span {
+    color: var(--white) !important;
   }
 
   .app-content {

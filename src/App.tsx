@@ -66,8 +66,8 @@ export default function App(): JSX.Element {
                                 display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
                                 borderTop: `2.5px solid ${active ? colors.mint : "transparent"}`, transition: "all .2s"
                             }}>
-                                <span style={{ fontSize: 20 }}>{item.icon}</span>
-                                <span style={{ fontSize: 11, fontWeight: active ? 800 : 600, color: active ? colors.mint : colors.textLight, fontFamily: "'Nunito',sans-serif" }}>{item.label}</span>
+                                <span className="nav-icon" style={{ fontSize: 20 }}>{item.icon}</span>
+                                <span className="nav-text" style={{ fontSize: 11, fontWeight: active ? 800 : 600, color: active ? colors.mint : colors.textLight, fontFamily: "'Nunito',sans-serif" }}>{item.label}</span>
                             </button>
                         );
                     })}

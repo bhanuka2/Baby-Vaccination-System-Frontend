@@ -12,7 +12,7 @@ export function AdminDashboard(): JSX.Element {
         <div style={{ paddingBottom: 80 }}>
             <div style={{ fontFamily: "'Nunito',sans-serif", fontWeight: 800, color: colors.navy, fontSize: 20, marginBottom: 4 }}>Admin Dashboard</div>
             <div style={{ fontSize: 13, color: colors.textLight, marginBottom: 20 }}>April 3, 2026 · VaxBaby Clinic</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 24 }}>
+            <div className="dashboard-stats">
                 {stats.map(s => (
                     <div key={s.label} style={{ background: colors.white, borderRadius: 16, padding: 16, border: `1px solid ${colors.border}` }}>
                         <div style={{ fontSize: 26, marginBottom: 8 }}>{s.icon}</div>

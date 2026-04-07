@@ -19,8 +19,8 @@ export default function App(): JSX.Element {
     }, []);
 
     if (!role) return (
-        <div style={{ minHeight: "100vh", background: `linear-gradient(160deg,#E8F4FF 0%,#F0FFF9 50%,#FFF0F8 100%)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Nunito',sans-serif", padding: 20 }}>
-            <div style={{ width: "100%", maxWidth: 380 }}>
+        <div className="app-wrapper" style={{ background: `linear-gradient(160deg,#E8F4FF 0%,#F0FFF9 50%,#FFF0F8 100%)`, alignItems: "center" }}>
+            <div className="auth-card" style={{ padding: 30 }}>
                 <div style={{ textAlign: "center", marginBottom: 36 }}>
                     <div style={{ fontSize: 60, marginBottom: 12 }}>🍼</div>
                     <div style={{ fontWeight: 900, fontSize: 30, color: colors.navy }}>VaxBaby</div>
@@ -47,43 +47,55 @@ export default function App(): JSX.Element {
     const setActivePage = isAdmin ? setAdminPage : setPage;
 
     return (
-        <div style={{ maxWidth: 430, margin: "0 auto", minHeight: "100vh", background: colors.softGray, fontFamily: "'Nunito',sans-serif", position: "relative" }}>
-            {/* Header */}
-            <div style={{ background: colors.white, padding: "14px 18px", borderBottom: `1px solid ${colors.border}`, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <div style={{ fontSize: 22 }}>🍼</div>
-                    <div>
-                        <div style={{ fontWeight: 900, fontSize: 17, color: colors.navy }}>VaxBaby</div>
-                        <div style={{ fontSize: 11, color: colors.textLight }}>{isAdmin ? "Admin Portal" : "Parent Portal"}</div>
+        <div className="app-wrapper">
+            <div className="app-container">
+                {/* Desktop Sidebar (matches mobile bottom nav structure but styled differently) */}
+                <div className="app-nav desktop-sidebar">
+                    <div className="desktop-only" style={{ padding: "0 24px 24px", display: "flex", alignItems: "center", gap: 10 }}>
+                        <div style={{ fontSize: 28 }}>🍼</div>
+                        <div>
+                            <div style={{ fontWeight: 900, fontSize: 20, color: colors.navy }}>VaxBaby</div>
+                            <div style={{ fontSize: 12, color: colors.textLight }}>{isAdmin ? "Admin Portal" : "Parent Portal"}</div>
+                        </div>
+                    </div>
+                    {navItems.map(item => {
+                        const active = activePage === item.id;
+                        return (
+                            <button key={item.id} className={`nav-item ${active ? 'active' : ''}`} onClick={() => setActivePage(item.id)} style={{
+                                flex: 1, padding: "12px 0 10px", border: "none", background: "transparent", cursor: "pointer",
+                                display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+                                borderTop: `2.5px solid ${active ? colors.mint : "transparent"}`, transition: "all .2s"
+                            }}>
+                                <span style={{ fontSize: 20 }}>{item.icon}</span>
+                                <span style={{ fontSize: 11, fontWeight: active ? 800 : 600, color: active ? colors.mint : colors.textLight, fontFamily: "'Nunito',sans-serif" }}>{item.label}</span>
+                            </button>
+                        );
+                    })}
+                    <div className="desktop-only" style={{ marginTop: "auto", width: "100%", padding: "20px 24px" }}>
+                        <button onClick={() => { setRole(null); setPage("home"); setAdminPage("dashboard"); }} style={{ width: "100%", background: colors.softGray, border: "none", borderRadius: 12, padding: "12px", fontSize: 13, color: colors.textMid, cursor: "pointer", fontFamily: "'Nunito',sans-serif", fontWeight: 700 }}>Logout</button>
                     </div>
                 </div>
-                <button onClick={() => { setRole(null); setPage("home"); setAdminPage("dashboard"); }} style={{ background: colors.softGray, border: "none", borderRadius: 10, padding: "6px 14px", fontSize: 12, color: colors.textMid, cursor: "pointer", fontFamily: "'Nunito',sans-serif", fontWeight: 600 }}>Logout</button>
-            </div>
 
-            {/* Content */}
-            <div style={{ padding: "20px 16px" }}>
-                {!isAdmin && page === "home" && <UserDashboard onNav={setPage} />}
-                {!isAdmin && page === "book" && <BookingPage onNav={setPage} />}
-                {!isAdmin && page === "profile" && <ProfilePage />}
-                {isAdmin && adminPage === "dashboard" && <AdminDashboard />}
-                {isAdmin && adminPage === "babies" && <AdminBabies />}
-            </div>
+                {/* Mobile Header */}
+                <div className="app-header">
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <div style={{ fontSize: 22 }}>🍼</div>
+                        <div>
+                            <div style={{ fontWeight: 900, fontSize: 17, color: colors.navy }}>VaxBaby</div>
+                            <div style={{ fontSize: 11, color: colors.textLight }}>{isAdmin ? "Admin Portal" : "Parent Portal"}</div>
+                        </div>
+                    </div>
+                    <button onClick={() => { setRole(null); setPage("home"); setAdminPage("dashboard"); }} style={{ background: colors.softGray, border: "none", borderRadius: 10, padding: "6px 14px", fontSize: 12, color: colors.textMid, cursor: "pointer", fontFamily: "'Nunito',sans-serif", fontWeight: 600 }}>Logout</button>
+                </div>
 
-            {/* Bottom Nav */}
-            <div style={{ position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "100%", maxWidth: 430, background: colors.white, borderTop: `1px solid ${colors.border}`, display: "flex", zIndex: 50 }}>
-                {navItems.map(item => {
-                    const active = activePage === item.id;
-                    return (
-                        <button key={item.id} onClick={() => setActivePage(item.id)} style={{
-                            flex: 1, padding: "12px 8px 10px", border: "none", background: "transparent", cursor: "pointer",
-                            display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
-                            borderTop: `2.5px solid ${active ? colors.mint : "transparent"}`, transition: "all .2s"
-                        }}>
-                            <span style={{ fontSize: 20 }}>{item.icon}</span>
-                            <span style={{ fontSize: 11, fontWeight: active ? 800 : 600, color: active ? colors.mint : colors.textLight, fontFamily: "'Nunito',sans-serif" }}>{item.label}</span>
-                        </button>
-                    );
-                })}
+                {/* Content */}
+                <div className="app-content">
+                    {!isAdmin && page === "home" && <UserDashboard onNav={setPage} />}
+                    {!isAdmin && page === "book" && <BookingPage onNav={setPage} />}
+                    {!isAdmin && page === "profile" && <ProfilePage />}
+                    {isAdmin && adminPage === "dashboard" && <AdminDashboard />}
+                    {isAdmin && adminPage === "babies" && <AdminBabies />}
+                </div>
             </div>
         </div>
     );
